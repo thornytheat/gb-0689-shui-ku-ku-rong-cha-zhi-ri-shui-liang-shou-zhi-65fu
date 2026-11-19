@@ -8,6 +8,13 @@ from app.modules.m6_review.rules import evaluate
 def test_incomplete_priority():
     assert evaluate([{'state':'缺测','residual':D(999)}],D(1))[0]['code']=='GAP'
 
+def test_partial_day_backfill_pending():
+    # 部分覆盖日可交班但仍待补测,不按超差裁决
+    assert evaluate([{'state':'部分','residual':D(99999)}],D(1))[0]['code']=='GAP'
+
+def test_no_common_window_pending():
+    assert evaluate([{'state':'完整','residual':None}],D(1))[0]['code']=='GAP'
+
 def test_threshold_included():
     assert evaluate([{'state':'完整','residual':D(500)}],D(500))[0]['state']=='通过'
 

@@ -28,6 +28,7 @@
 | TRAP-14 | 同刻水文矛盾 | 静默填补或算错 | 明确隔离和守恒 | `app/modules/m2_curve/rules.py` | `tests/test_m2_curve.py::test_real_conflict` |
 | TRAP-15 | 升每秒换算 | 静默填补或算错 | 明确隔离和守恒 | `app/modules/m2_curve/rules.py` | `tests/test_m2_curve.py::test_unit_conversion` |
 | TRAP-23 | 午夜切分 | 静默填补或算错 | 明确隔离和守恒 | `app/modules/m5_budget/rules.py` | `tests/test_m5_budget.py::test_midnight_split` |
+| TRAP-24 | 水位流量两路错开 | 凑同一对测次，水位重复推进、流量稍晚整日判缺 | 双序列分轨入账，各自依据时段，收支差只取共同窗口，部分日可交班 | `app/modules/m5_budget/rules.py` `app/modules/m2_curve/rules.py` | `tests/test_m5_budget.py::test_decoupled_windows` `tests/test_e2e.py::test_backfill_rerun_never_double_counts` |
 
 ## 对账规则
 

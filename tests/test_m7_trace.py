@@ -11,6 +11,14 @@ def test_row_count_failure():
 def test_water_failure():
     with pytest.raises(DomainError):trace([],[],0,[{'in_m3':D(1)}],[])
 
+def test_storage_failure():
+    with pytest.raises(DomainError):trace([],[],0,[],[{'in_m3':D(0),'storage_change':D(1)}],storage_expected=D(2))
+
+def test_real_storage_balance(raw):
+    # 日切库容变化与水位序列分段端点守恒
+    x=run(raw,persist=False)
+    assert abs(D(x['audit']['storage_m3'])-sum(D(y['storage_change']) for y in x['budgets']))<D('.000000001')
+
 def test_empty():
     assert trace([],[],0,[],[])['watermarks']=={}
 
